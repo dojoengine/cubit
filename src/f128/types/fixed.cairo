@@ -430,10 +430,10 @@ impl FixedAdd of Add<Fixed> {
     }
 }
 
-impl FixedAddEq of AddEq<Fixed> {
+impl FixedAddEq of core::ops::AddAssign<Fixed, Fixed> {
     #[inline(always)]
-    fn add_eq(ref self: Fixed, other: Fixed) {
-        self = Add::add(self, other);
+    fn add_assign(ref self: Fixed, rhs: Fixed) {
+        self = Add::add(self, rhs);
     }
 }
 
@@ -443,10 +443,10 @@ impl FixedSub of Sub<Fixed> {
     }
 }
 
-impl FixedSubEq of SubEq<Fixed> {
+impl FixedSubEq of core::ops::SubAssign<Fixed, Fixed> {
     #[inline(always)]
-    fn sub_eq(ref self: Fixed, other: Fixed) {
-        self = Sub::sub(self, other);
+    fn sub_assign(ref self: Fixed, rhs: Fixed) {
+        self = Sub::sub(self, rhs);
     }
 }
 
@@ -456,10 +456,10 @@ impl FixedMul of Mul<Fixed> {
     }
 }
 
-impl FixedMulEq of MulEq<Fixed> {
+impl FixedMulEq of core::ops::MulAssign<Fixed, Fixed> {
     #[inline(always)]
-    fn mul_eq(ref self: Fixed, other: Fixed) {
-        self = Mul::mul(self, other);
+    fn mul_assign(ref self: Fixed, rhs: Fixed) {
+        self = Mul::mul(self, rhs);
     }
 }
 
@@ -469,10 +469,10 @@ impl FixedDiv of Div<Fixed> {
     }
 }
 
-impl FixedDivEq of DivEq<Fixed> {
+impl FixedDivEq of core::ops::DivAssign<Fixed, Fixed> {
     #[inline(always)]
-    fn div_eq(ref self: Fixed, other: Fixed) {
-        self = Div::div(self, other);
+    fn div_assign(ref self: Fixed, rhs: Fixed) {
+        self = Div::div(self, rhs);
     }
 }
 

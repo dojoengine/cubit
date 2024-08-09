@@ -4,6 +4,7 @@ use core::result::{ResultTrait, ResultTraitImpl};
 use core::traits::{Into, TryInto};
 use core::integer;
 use core::integer::{u256_safe_div_rem, u256_as_non_zero, upcast};
+use core::num::traits::{WideMul, Sqrt};
 
 use cubit::f128::math::lut;
 use cubit::f128::types::fixed::{
@@ -48,8 +49,7 @@ fn ceil(a: Fixed) -> Fixed {
 }
 
 fn div(a: Fixed, b: Fixed) -> Fixed {
-    let (a_high, a_low) = integer::u128_wide_mul(a.mag, ONE_u128);
-    let a_u256 = u256 { low: a_low, high: a_high };
+    let a_u256 = WideMul::<u128,u128>::wide_mul(a.mag, ONE_u128);
     let b_u256 = u256 { low: b.mag, high: 0 };
     let res_u256 = a_u256 / b_u256;
 
@@ -186,8 +186,7 @@ fn lt(a: Fixed, b: Fixed) -> bool {
 }
 
 fn mul(a: Fixed, b: Fixed) -> Fixed {
-    let (high, low) = integer::u128_wide_mul(a.mag, b.mag);
-    let res_u256 = u256 { low: low, high: high };
+    let res_u256 = WideMul::<u128,u128>::wide_mul(a.mag, b.mag);
     let ONE_u256 = u256 { low: ONE_u128, high: 0 };
     let (scaled_u256, _) = u256_safe_div_rem(res_u256, u256_as_non_zero(ONE_u256));
 
@@ -204,7 +203,7 @@ struct f64 {
 }
 
 fn mul_64(a: f64, b: f64) -> f64 {
-    let prod_u128 = integer::u64_wide_mul(a.mag, b.mag);
+    let prod_u128 = WideMul::<u64,u64>::wide_mul(a.mag, b.mag);
     return f64 { mag: (prod_u128 / 4294967296).try_into().unwrap(), sign: a.sign ^ b.sign };
 }
 
@@ -289,8 +288,8 @@ fn round(a: Fixed) -> Fixed {
 // x must be positive
 fn sqrt(a: Fixed) -> Fixed {
     assert(a.sign == false, 'must be positive');
-    let root = integer::u128_sqrt(a.mag);
-    let scale_root = integer::u128_sqrt(ONE_u128);
+    let root = Sqrt::<u128>::sqrt(a.mag);
+    let scale_root = Sqrt::<u128>::sqrt(ONE_u128);
     let res_u128 = upcast(root) * ONE_u128 / upcast(scale_root);
     return FixedTrait::new(res_u128, false);
 }
@@ -310,7 +309,7 @@ fn _split_unsigned(a: Fixed) -> (u128, u128) {
 mod tests {
     use cubit::f128::test::helpers::assert_precise;
     use cubit::f128::types::fixed::{
-        ONE, HALF, FixedPartialEq, FixedPartialOrd, FixedAddEq, FixedSub, FixedSubEq, FixedMulEq
+        ONE, HALF, FixedPartialEq, FixedPartialOrd, FixedAddAssign, FixedSub, FixedSubAssign, FixedMulAssign
     };
 
     use cubit::f128::math::trig::HALF_PI_u128;

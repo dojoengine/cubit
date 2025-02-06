@@ -541,12 +541,12 @@ mod tests {
         let c = FixedTrait::new_unscaled(1, true);
 
         assert(a <= a, 'a <= a');
-        assert(a <= b == false, 'a <= b');
-        assert(a <= c == false, 'a <= c');
+        assert((a <= b) == false, 'a <= b');
+        assert((a <= c) == false, 'a <= c');
 
         assert(b <= a, 'b <= a');
         assert(b <= b, 'b <= b');
-        assert(b <= c == false, 'b <= c');
+        assert((b <= c) == false, 'b <= c');
 
         assert(c <= a, 'c <= a');
         assert(c <= b, 'c <= b');
@@ -559,17 +559,17 @@ mod tests {
         let b = FixedTrait::new_unscaled(0, false);
         let c = FixedTrait::new_unscaled(1, true);
 
-        assert(a < a == false, 'a < a');
-        assert(a < b == false, 'a < b');
-        assert(a < c == false, 'a < c');
+        assert((a < a) == false, 'a < a');
+        assert((a < b) == false, 'a < b');
+        assert((a < c) == false, 'a < c');
 
         assert(b < a, 'b < a');
-        assert(b < b == false, 'b < b');
-        assert(b < c == false, 'b < c');
+        assert((b < b) == false, 'b < b');
+        assert((b < c) == false, 'b < c');
 
         assert(c < a, 'c < a');
         assert(c < b, 'c < b');
-        assert(c < c == false, 'c < c');
+        assert((c < c) == false, 'c < c');
     }
 
     #[test]
@@ -582,12 +582,12 @@ mod tests {
         assert(a >= b, 'a >= b');
         assert(a >= c, 'a >= c');
 
-        assert(b >= a == false, 'b >= a');
+        assert((b >= a) == false, 'b >= a');
         assert(b >= b, 'b >= b');
         assert(b >= c, 'b >= c');
 
-        assert(c >= a == false, 'c >= a');
-        assert(c >= b == false, 'c >= b');
+        assert((c >= a) == false, 'c >= a');
+        assert((c >= b) == false, 'c >= b');
         assert(c >= c, 'c >= c');
     }
 
@@ -597,17 +597,17 @@ mod tests {
         let b = FixedTrait::new_unscaled(0, false);
         let c = FixedTrait::new_unscaled(1, true);
 
-        assert(a > a == false, 'a > a');
+        assert((a > a) == false, 'a > a');
         assert(a > b, 'a > b');
         assert(a > c, 'a > c');
 
-        assert(b > a == false, 'b > a');
-        assert(b > b == false, 'b > b');
+        assert((b > a) == false, 'b > a');
+        assert((b > b) == false, 'b > b');
         assert(b > c, 'b > c');
 
-        assert(c > a == false, 'c > a');
-        assert(c > b == false, 'c > b');
-        assert(c > c == false, 'c > c');
+        assert((c > a) == false, 'c > a');
+        assert((c > b) == false, 'c > b');
+        assert((c > c) == false, 'c > c');
     }
 
     #[test]
